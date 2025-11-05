@@ -282,95 +282,95 @@ class RackNerdCollector:
         vm_info = GaugeMetricFamily(
             'racknerd_vm_info',
             'Information about the VM',
-            labels=['vm_id', 'hostname', 'ip_address', 'os', 'vm_type']
+            labels=['hostname', 'ip_address', 'os', 'vm_type']
         )
 
         vm_state = GaugeMetricFamily(
             'racknerd_vm_state',
             'VM power state (1=online, 0=offline)',
-            labels=['vm_id', 'hostname']
+            labels=['hostname']
         )
 
         vm_stats_up = GaugeMetricFamily(
             'racknerd_vm_stats_available',
             'Whether VM stats are available (1=available, 0=unavailable)',
-            labels=['vm_id', 'hostname']
+            labels=['hostname']
         )
 
         # Bandwidth metrics
         bandwidth_total = GaugeMetricFamily(
             'racknerd_bandwidth_total_bytes',
             'Total bandwidth allocation in bytes',
-            labels=['vm_id', 'hostname']
+            labels=['hostname']
         )
 
         bandwidth_used = GaugeMetricFamily(
             'racknerd_bandwidth_used_bytes',
             'Used bandwidth in bytes',
-            labels=['vm_id', 'hostname']
+            labels=['hostname']
         )
 
         bandwidth_percent = GaugeMetricFamily(
             'racknerd_bandwidth_usage_percent',
             'Bandwidth usage percentage',
-            labels=['vm_id', 'hostname']
+            labels=['hostname']
         )
 
         # Disk metrics
         disk_total = GaugeMetricFamily(
             'racknerd_disk_total_bytes',
             'Total disk space in bytes',
-            labels=['vm_id', 'hostname']
+            labels=['hostname']
         )
 
         disk_used = GaugeMetricFamily(
             'racknerd_disk_used_bytes',
             'Used disk space in bytes',
-            labels=['vm_id', 'hostname']
+            labels=['hostname']
         )
 
         disk_percent = GaugeMetricFamily(
             'racknerd_disk_usage_percent',
             'Disk usage percentage',
-            labels=['vm_id', 'hostname']
+            labels=['hostname']
         )
 
         # Memory metrics
         memory_total = GaugeMetricFamily(
             'racknerd_memory_total_bytes',
             'Total memory in bytes',
-            labels=['vm_id', 'hostname']
+            labels=['hostname']
         )
 
         memory_used = GaugeMetricFamily(
             'racknerd_memory_used_bytes',
             'Used memory in bytes',
-            labels=['vm_id', 'hostname']
+            labels=['hostname']
         )
 
         memory_percent = GaugeMetricFamily(
             'racknerd_memory_usage_percent',
             'Memory usage percentage',
-            labels=['vm_id', 'hostname']
+            labels=['hostname']
         )
 
         # VSwap metrics
         vswap_total = GaugeMetricFamily(
             'racknerd_vswap_total_bytes',
             'Total vswap in bytes',
-            labels=['vm_id', 'hostname']
+            labels=['hostname']
         )
 
         vswap_used = GaugeMetricFamily(
             'racknerd_vswap_used_bytes',
             'Used vswap in bytes',
-            labels=['vm_id', 'hostname']
+            labels=['hostname']
         )
 
         vswap_percent = GaugeMetricFamily(
             'racknerd_vswap_usage_percent',
             'VSwap usage percentage',
-            labels=['vm_id', 'hostname']
+            labels=['hostname']
         )
 
         # Collect stats for each VM
@@ -380,7 +380,7 @@ class RackNerdCollector:
 
             # Add VM info
             vm_info.add_metric(
-                [vm_id, hostname, vm['ip_address'], vm['os'], vm['vm_type']],
+                [hostname, vm['ip_address'], vm['os'], vm['vm_type']],
                 1
             )
 
@@ -389,7 +389,7 @@ class RackNerdCollector:
 
             if stats:
                 # VM stats are available
-                vm_stats_up.add_metric([vm_id, hostname], 1)
+                vm_stats_up.add_metric([hostname], 1)
 
                 # VM State (power state)
                 state_value = stats.get('state', '0')
@@ -397,38 +397,38 @@ class RackNerdCollector:
                     state = int(state_value)
                 except (ValueError, TypeError):
                     state = 0
-                vm_state.add_metric([vm_id, hostname], state)
+                vm_state.add_metric([hostname], state)
 
                 logger.debug(f"VM {hostname} state: {state} ({'online' if state == 1 else 'offline'})")
 
                 # Bandwidth
                 if stats.get('totalbw'):
-                    bandwidth_total.add_metric([vm_id, hostname], self.parse_size(stats['totalbw']))
-                    bandwidth_used.add_metric([vm_id, hostname], self.parse_size(stats.get('usedbw', '0')))
-                    bandwidth_percent.add_metric([vm_id, hostname], float(stats.get('percentbw', '0')))
+                    bandwidth_total.add_metric([hostname], self.parse_size(stats['totalbw']))
+                    bandwidth_used.add_metric([hostname], self.parse_size(stats.get('usedbw', '0')))
+                    bandwidth_percent.add_metric([hostname], float(stats.get('percentbw', '0')))
 
                 # Disk
                 if stats.get('totalhdd'):
-                    disk_total.add_metric([vm_id, hostname], self.parse_size(stats['totalhdd']))
-                    disk_used.add_metric([vm_id, hostname], self.parse_size(stats.get('usedhdd', '0')))
-                    disk_percent.add_metric([vm_id, hostname], float(stats.get('percenthdd', '0')))
+                    disk_total.add_metric([hostname], self.parse_size(stats['totalhdd']))
+                    disk_used.add_metric([hostname], self.parse_size(stats.get('usedhdd', '0')))
+                    disk_percent.add_metric([hostname], float(stats.get('percenthdd', '0')))
 
                 # Memory
                 if stats.get('totalmem') and stats['totalmem'] not in ['null', None]:
-                    memory_total.add_metric([vm_id, hostname], self.parse_size(stats['totalmem']))
-                    memory_used.add_metric([vm_id, hostname], self.parse_size(stats.get('usedmem', '0')))
-                    memory_percent.add_metric([vm_id, hostname], float(stats.get('percentmem', '0')))
+                    memory_total.add_metric([hostname], self.parse_size(stats['totalmem']))
+                    memory_used.add_metric([hostname], self.parse_size(stats.get('usedmem', '0')))
+                    memory_percent.add_metric([hostname], float(stats.get('percentmem', '0')))
 
                 # VSwap
                 if stats.get('totalvswap') and stats['totalvswap'] not in ['null', None]:
-                    vswap_total.add_metric([vm_id, hostname], self.parse_size(stats['totalvswap']))
-                    vswap_used.add_metric([vm_id, hostname], self.parse_size(stats.get('usedvswap', '0')))
-                    vswap_percent.add_metric([vm_id, hostname], float(stats.get('percentvswap', '0')))
+                    vswap_total.add_metric([hostname], self.parse_size(stats['totalvswap']))
+                    vswap_used.add_metric([hostname], self.parse_size(stats.get('usedvswap', '0')))
+                    vswap_percent.add_metric([hostname], float(stats.get('percentvswap', '0')))
             else:
                 # No stats available
-                vm_stats_up.add_metric([vm_id, hostname], 0)
+                vm_stats_up.add_metric([hostname], 0)
                 # Set state to offline when stats unavailable
-                vm_state.add_metric([vm_id, hostname], 0)
+                vm_state.add_metric([hostname], 0)
                 logger.warning(f"Stats unavailable for VM {hostname}")
 
         # Yield all metrics

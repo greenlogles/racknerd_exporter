@@ -95,56 +95,56 @@ python racknerd_exporter.py \
 
 | Metric Name | Type | Description | Labels |
 |-------------|------|-------------|--------|
-| `racknerd_vm_info` | Gauge | VM information (always 1) | vm_id, hostname, ip_address, os, vm_type |
-| `racknerd_vm_state` | Gauge | VM power state (1=online/running, 0=offline/stopped) | vm_id, hostname |
-| `racknerd_vm_stats_available` | Gauge | Whether VM stats are retrievable (1=available, 0=unavailable) | vm_id, hostname |
-| `racknerd_bandwidth_total_bytes` | Gauge | Total bandwidth allocation | vm_id, hostname |
-| `racknerd_bandwidth_used_bytes` | Gauge | Used bandwidth | vm_id, hostname |
-| `racknerd_bandwidth_usage_percent` | Gauge | Bandwidth usage percentage | vm_id, hostname |
-| `racknerd_disk_total_bytes` | Gauge | Total disk space | vm_id, hostname |
-| `racknerd_disk_used_bytes` | Gauge | Used disk space | vm_id, hostname |
-| `racknerd_disk_usage_percent` | Gauge | Disk usage percentage | vm_id, hostname |
-| `racknerd_memory_total_bytes` | Gauge | Total memory | vm_id, hostname |
-| `racknerd_memory_used_bytes` | Gauge | Used memory | vm_id, hostname |
-| `racknerd_memory_usage_percent` | Gauge | Memory usage percentage | vm_id, hostname |
-| `racknerd_vswap_total_bytes` | Gauge | Total vswap | vm_id, hostname |
-| `racknerd_vswap_used_bytes` | Gauge | Used vswap | vm_id, hostname |
-| `racknerd_vswap_usage_percent` | Gauge | VSwap usage percentage | vm_id, hostname |
+| `racknerd_vm_info` | Gauge | VM information (always 1) | hostname, ip_address, os, vm_type |
+| `racknerd_vm_state` | Gauge | VM power state (1=online/running, 0=offline/stopped) | hostname |
+| `racknerd_vm_stats_available` | Gauge | Whether VM stats are retrievable (1=available, 0=unavailable) | hostname |
+| `racknerd_bandwidth_total_bytes` | Gauge | Total bandwidth allocation | hostname |
+| `racknerd_bandwidth_used_bytes` | Gauge | Used bandwidth | hostname |
+| `racknerd_bandwidth_usage_percent` | Gauge | Bandwidth usage percentage | hostname |
+| `racknerd_disk_total_bytes` | Gauge | Total disk space | hostname |
+| `racknerd_disk_used_bytes` | Gauge | Used disk space | hostname |
+| `racknerd_disk_usage_percent` | Gauge | Disk usage percentage | hostname |
+| `racknerd_memory_total_bytes` | Gauge | Total memory | hostname |
+| `racknerd_memory_used_bytes` | Gauge | Used memory | hostname |
+| `racknerd_memory_usage_percent` | Gauge | Memory usage percentage | hostname |
+| `racknerd_vswap_total_bytes` | Gauge | Total vswap | hostname |
+| `racknerd_vswap_used_bytes` | Gauge | Used vswap | hostname |
+| `racknerd_vswap_usage_percent` | Gauge | VSwap usage percentage | hostname |
 
 ### Example Metrics Output
 
 ```
 # HELP racknerd_vm_info Information about the VM
 # TYPE racknerd_vm_info gauge
-racknerd_vm_info{hostname="racknerd-1234567",ip_address="xxx.xxx.xxx.xxx",os="Debian 12 64 bit",vm_id="w123456789m123456789",vm_type="kvm"} 1.0
+racknerd_vm_info{hostname="racknerd-1234567",ip_address="xxx.xxx.xxx.xxx",os="Debian 12 64 bit",vm_type="kvm"} 1.0
 
 # HELP racknerd_vm_state VM power state (1=online, 0=offline)
 # TYPE racknerd_vm_state gauge
-racknerd_vm_state{hostname="racknerd-1234567",vm_id="w123456789m123456789"} 1.0
+racknerd_vm_state{hostname="racknerd-1234567"} 1.0
 
 # HELP racknerd_vm_stats_available Whether VM stats are available (1=available, 0=unavailable)
 # TYPE racknerd_vm_stats_available gauge
-racknerd_vm_stats_available{hostname="racknerd-1234567",vm_id="w123456789m123456789"} 1.0
+racknerd_vm_stats_available{hostname="racknerd-1234567"} 1.0
 
 # HELP racknerd_bandwidth_total_bytes Total bandwidth allocation in bytes
 # TYPE racknerd_bandwidth_total_bytes gauge
-racknerd_bandwidth_total_bytes{hostname="racknerd-1234567",vm_id="w123456789m123456789"} 8589934592000.0
+racknerd_bandwidth_total_bytes{hostname="racknerd-1234567"} 8589934592000.0
 
 # HELP racknerd_bandwidth_used_bytes Used bandwidth in bytes
 # TYPE racknerd_bandwidth_used_bytes gauge
-racknerd_bandwidth_used_bytes{hostname="racknerd-1234567",vm_id="w123456789m123456789"} 899186688.0
+racknerd_bandwidth_used_bytes{hostname="racknerd-1234567"} 899186688.0
 
 # HELP racknerd_disk_total_bytes Total disk space in bytes
 # TYPE racknerd_disk_total_bytes gauge
-racknerd_disk_total_bytes{hostname="racknerd-1234567",vm_id="w123456789m123456789"} 32212254720.0
+racknerd_disk_total_bytes{hostname="racknerd-1234567"} 32212254720.0
 
 # HELP racknerd_disk_used_bytes Used disk space in bytes
 # TYPE racknerd_disk_used_bytes gauge
-racknerd_disk_used_bytes{hostname="racknerd-1234567",vm_id="w123456789m123456789"} 21876924416.0
+racknerd_disk_used_bytes{hostname="racknerd-1234567"} 21876924416.0
 
 # HELP racknerd_disk_usage_percent Disk usage percentage
 # TYPE racknerd_disk_usage_percent gauge
-racknerd_disk_usage_percent{hostname="racknerd-1234567",vm_id="w123456789m123456789"} 68.0
+racknerd_disk_usage_percent{hostname="racknerd-1234567"} 68.0
 ```
 
 ## Prometheus Configuration
