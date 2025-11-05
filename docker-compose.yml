@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  racknerd-exporter:
+    image: ghcr.io/greenlogles/racknerd_exporter:latest
+    container_name: racknerd-exporter
+    ports:
+      - "9100:9100"
+    environment:
+      - RACKNERD_URL=${RACKNERD_URL:-https://nerdvm.racknerd.com}
+      - RACKNERD_USERNAME=${RACKNERD_USERNAME}
+      - RACKNERD_PASSWORD=${RACKNERD_PASSWORD}
+      - RACKNERD_PORT=9100
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    restart: unless-stopped

@@ -1,0 +1,16 @@
+*.html
+*_files/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.git/
+.gitignore
+.github/
+README.md
+SETUP.md
+config.yaml
+*.example
+.env
+vm_details.json
+test_login.py
